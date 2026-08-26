@@ -1,9 +1,11 @@
 :root {
     --imperfect-white: rgb(245, 245, 245);
-    --imperfect-black: rgb(20, 20, 20);
-    --lime-green: rgb(11, 194, 111);
+    --imperfect-black: rgb(30, 30, 30);
+    --lime-green: rgb(47, 145, 70);
     --light-green: rgb(159, 202, 169);
+    --dark-green: rgb(16, 104, 23);
     --navy-blue: rgb(30, 55, 81);
+    --font-blue: rgb(67, 48, 71);
     --thick-blue: rgb(70, 123, 189);
 }
 
@@ -62,7 +64,7 @@ a {
     justify-content: center;
     align-items: center;
 
-    background-color: var(--navy-blue);
+    background-color: var(--lime-green);
 }
 
 /* menu bar that stays at the top of the page as the user scrolls up/down */
@@ -72,8 +74,8 @@ a {
     justify-content: center;
     align-items: center;
 
-    border-top: 2px solid var(--navy-blue);
-    border-bottom: 2px solid var(--navy-blue);
+    border-top: 2px solid var(--lime-green);
+    border-bottom: 2px solid var(--lime-green);
 
     position: sticky;
     top: 0;
@@ -143,7 +145,7 @@ a {
     height: 100px;
     width: 100%;
 
-    background-color: var(--navy-blue);
+    background-color: var(--lime-green);
 }
 
 .bottom_info_bar_text {

@@ -1,70 +1,63 @@
-.about_page_content {
+.about_company_words_container {
     display: flex;
-    align-items: flex-start;
     justify-content: center;
+    align-items: center;
+
+    height: 400px;
+    width: 80%;
+    margin: 50px auto 0 auto;    /* margin: top right bottom left; */
+
+    /* background-color: rgb(255, 255, 255); */
+}
+
+.about_company_words_content {
+    display: flex;
+    /* align-items: flex-start;
+    justify-content: space-between; */
 
     height: 100%;
-    width: 80%;
-    margin: 0 auto 0 auto;
-
-    gap: 100px;
+    width: 100%;
+    /* gap: 150px; */
 }
 
-.about_page_word_container {
+.about_company_tagline_details {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
 
-    /* width: 35%; */
-    margin-top: 20px;
-
-    /* background-color: rgb(106, 20, 20); */
+    height: 100%;
+    width: 35%;
 }
 
-.about_page_text_details {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-
-    /* width: 35%; */
-    margin-top: 50px;
+.about_company_tagline_text {
+    color: var(--font-blue);
+    font-family: "Thin_Formal_Italics";
+    text-align: left;
+    font-size: 40px;
+    font-weight: bold;
 }
 
-.about_page_text {
-    color: var(--navy-blue);
+.about_company_tagline_desc {
+    color: var(--font-blue);
     font-family: "Thin_Formal_Clean";
     text-align: left;
     font-size: 25px;
     font-weight: bold;
 }
 
-.about_page_text_desc_container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-}
-
-.about_page_text_desc {
-    color: var(--navy-blue);
-    font-family: "Thin_Formal_Clean";
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.about_page_image_details {
+.about_company_image_details {
     display: flex;
     align-items: center;
     justify-content: center;
 
     height: 100%;
-    /* width: 45%; */
+    width: 65%;
+
+    /* background-color: rgb(192, 87, 87); */
 }
 
-.about_page_image {
-    height: 60%;
+.about_company_image {
+    height: 90%;
     width: auto;
 }
