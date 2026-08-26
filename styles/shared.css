@@ -5,7 +5,7 @@
     --light-green: rgb(159, 202, 169);
     --dark-green: rgb(16, 104, 23);
     --navy-blue: rgb(30, 55, 81);
-    --font-blue: rgb(67, 48, 71);
+    --font-blue: var(--imp)
     --thick-blue: rgb(70, 123, 189);
 }
 
@@ -64,7 +64,7 @@ a {
     justify-content: center;
     align-items: center;
 
-    background-color: var(--lime-green);
+    background-color: var(--navy-blue);
 }
 
 /* menu bar that stays at the top of the page as the user scrolls up/down */
@@ -74,8 +74,8 @@ a {
     justify-content: center;
     align-items: center;
 
-    border-top: 2px solid var(--lime-green);
-    border-bottom: 2px solid var(--lime-green);
+    border-top: 2px solid var(--navy-blue);
+    border-bottom: 2px solid var(--navy-blue);
 
     position: sticky;
     top: 0;
@@ -135,6 +135,17 @@ a {
 
 
 
+.page_content_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: calc(100dvh - 75px - 100px - 100px - 4px);
+    width: 80%;
+}
+
+
+
 /* BOTTOM BAR STYLING -------------------------------------------------------------*/
 
 .bottom_info_bar {
@@ -145,7 +156,7 @@ a {
     height: 100px;
     width: 100%;
 
-    background-color: var(--lime-green);
+    background-color: var(--navy-blue);
 }
 
 .bottom_info_bar_text {
@@ -156,13 +167,3 @@ a {
 }
 
 /* BOTTOM BAR STYLING -------------------------------------------------------------*/
-
-
-.page_content_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: calc(100dvh - 75px - 100px - 100px - 4px);
-    width: 80%;
-}
