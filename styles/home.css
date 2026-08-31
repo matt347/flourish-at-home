@@ -1,6 +1,8 @@
 .homepage_gradient_container {
-    height: 700px;
+    min-height: 700px;
+    height: auto;
     width: 100%;
+    padding-top: 50px;
     
     background-repeat: no-repeat;
     background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, var(--imperfect-white) 80%, var(--navy-blue) 100%);
@@ -11,19 +13,20 @@
     justify-content: center;
     align-items: center;
 
-    height: 400px;
+    min-height: 400px;
+    height: auto;
     width: 80%;
-    margin: 50px auto 0 auto;    /* margin: top right bottom left; */
+    margin: 0 auto 0 auto;    /* margin: top right bottom left; */
 
     /* background-color: rgb(255, 255, 255); */
 }
 
 .homepage_company_words_content {
-    display: flex;
+    display: block;
     /* align-items: flex-start;
     justify-content: space-between; */
 
-    height: 100%;
+    height: auto;
     width: 100%;
     /* gap: 150px; */
 }
@@ -34,24 +37,22 @@
     align-items: flex-start;
     flex-direction: column;
 
-    height: 100%;
-    width: 35%;
+    height: auto;
 }
 
 .homepage_company_tagline_text {
-    color: var(--font-blue);
-    font-family: "Thin_Formal_Italics";
+    color: var(--header-color);
+    font-family: "Thin_Formal_Clean";
     text-align: left;
     font-size: 40px;
     font-weight: bold;
 }
 
 .homepage_company_tagline_desc {
-    color: var(--font-blue);
-    font-family: "Thin_Formal_Clean";
+    color: var(--desc-color);
+    font-family: "Open_Sans";
     text-align: left;
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 20px;
 }
 
 .homepage_company_image_details {
@@ -59,14 +60,15 @@
     align-items: center;
     justify-content: center;
 
-    height: 100%;
-    width: 65%;
+    height: auto;
 
     /* background-color: rgb(192, 87, 87); */
 }
 
 .homepage_company_image {
-    height: 90%;
+    max-height: 360px;
+    max-width: 100%;
+    height: auto;
     width: auto;
 }
 
@@ -81,32 +83,27 @@
     justify-content: center;
     align-items: center;
 
-    height: 400px;
+    height: auto;
     width: 80%;
     margin: 50px auto 100px auto;    /* margin: top right bottom left; */
 }
 
 .homepage_three_box_split_content {
-    display: flex;
+    display: block;
     align-items: flex-start;
     justify-content: space-between;
 
-    height: 100%;
+    height: auto;
     width: 100%;
     /* gap: 150px; */
 }
 
 .homepage_three_box_split_box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
     border: 2px solid rgb(0, 0, 0);
     box-shadow: 0 12px 12px rgba(0, 0, 0, 0.2);
 
-    height: 100%;
-    width: 30%;
+    height: 400px;
+    width: 100%
 }
 
 .homepage_three_box_split_box_container {

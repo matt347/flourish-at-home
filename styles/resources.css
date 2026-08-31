@@ -1,0 +1,15 @@
+.resource_links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-left: 200px;
+    gap: 10px;
+}
+
+.resource_links a {
+    color: var(--header-color);
+    font-family: "Open_Sans";
+    text-align: left;
+    font-size: 30px;
+    text-decoration: underline; /* removes the underline from links */
+}

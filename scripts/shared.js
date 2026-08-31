@@ -1,0 +1,32 @@
+const pageContent = document.getElementById("page_content");
+const pageStyle = document.getElementById("page_style");
+
+async function loadPage(page) {
+    const response = await fetch(`pages/content/${page}.html`);
+    pageContent.innerHTML = await response.text();
+
+    pageStyle.href = `styles/${page}.css`;
+}
+
+document.querySelectorAll(".menu_bar_links a").forEach(link => {
+    link.addEventListener("click", () => {
+        const page = link.dataset.page;
+
+        if (window.location.hash === `#${page}`) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        } else {
+            loadPage(page);
+        }
+
+        const navigation = document.getElementById("main_navigation");
+        if (navigation && navigation.classList.contains("show")) {
+            bootstrap.Collapse.getOrCreateInstance(navigation).hide();
+        }
+    });
+});
+
+const startingPage = window.location.hash.substring(1) || "home";
+loadPage(startingPage);

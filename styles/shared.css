@@ -5,8 +5,21 @@
     --light-green: rgb(159, 202, 169);
     --dark-green: rgb(16, 104, 23);
     --navy-blue: rgb(30, 55, 81);
-    --font-blue: var(--imp)
     --thick-blue: rgb(70, 123, 189);
+    --header-color: var(--navy-blue);
+    --desc-color: rgb(79, 79, 79);
+}
+
+@font-face {
+    font-family: "Arial";
+    src: local("Arial"); /* redundant but easy to visualize */
+}
+
+@font-face {
+    font-family: "Open_Sans";
+    src: url("../fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 350;
 }
 
 @font-face {
@@ -39,7 +52,15 @@
     font-style: normal;
 }
 
-body {
+@view-transition {
+    navigation: auto;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+html, body {
     margin: 0;
     background-color: var(--imperfect-white);
 }
@@ -98,33 +119,43 @@ a {
     height: 100%;
     width: 100%;
     gap: 100px;
+    padding: 0;
+    flex-wrap: wrap;
 }
 
 /* company name and logo on the left side of the menu bar */
-.company_details {
+.menu_bar_company_details {
     display: flex;
     align-items: center;
+    justify-content: center;
     white-space: nowrap;
 
     height: 100%;
     gap: 15px;
 }
 
-.company_text {
+.menu_bar_company_text {
     color: var(--imperfect-black);
     font-family: "Less_Bubbly_Formal_Clean";
     text-align: center;
     font-size: 30px;
+
+    margin: 0;
 }
 
 /* company logo on the left side of the menu bar */
-.company_logo_image {
+.menu_bar_company_logo_image {
     height: 75%;
     width: auto;
 }
 
 /* company page links on the right side of the menu bar */
 .menu_bar_links {
+    display: flex;
+    align-items: center;
+}
+
+.menu_bar_links .navbar-nav {
     display: flex;
     align-items: center;
 
@@ -140,8 +171,9 @@ a {
     justify-content: center;
     align-items: center;
 
-    height: calc(100dvh - 75px - 100px - 100px - 4px);
+    min-height: calc(100dvh - 75px - 100px - 100px - 4px);
     width: 80%;
+    margin: 0 auto;
 }
 
 
@@ -167,3 +199,51 @@ a {
 }
 
 /* BOTTOM BAR STYLING -------------------------------------------------------------*/
+
+/* BOOTSTRAP RESPONSIVE STYLING -------------------------------------------------------------*/
+
+.menu_bar_links .nav-link {
+    color: var(--imperfect-black);
+}
+
+.navbar-toggler {
+    border-color: var(--navy-blue);
+}
+
+@media (max-width: 1199.98px) {
+    .menu_bar_container {
+        height: auto;
+        min-height: 100px;
+    }
+
+    .menu_bar_content {
+        height: auto;
+        min-height: 100px;
+        gap: 20px;
+        padding: 10px 5%;
+    }
+
+    .company_logo_image {
+        height: 70px;
+    }
+
+    .company_text {
+        font-size: 24px;
+    }
+
+    .menu_bar_links {
+        width: 100%;
+        padding-top: 10px;
+    }
+
+    .menu_bar_links .navbar-nav {
+        width: 100%;
+        gap: 0;
+    }
+
+    .menu_bar_links .nav-link {
+        padding: 10px 0;
+    }
+}
+
+/* BOOTSTRAP RESPONSIVE STYLING -------------------------------------------------------------*/

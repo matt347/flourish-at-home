@@ -1,9 +1,13 @@
-.about_company_words_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.page_content_container {
+    align-items: flex-start;
+    margin: auto auto 50px auto;    /* margin: top right bottom left; */
+}
 
-    height: 400px;
+.about_company_words_container {
+    align-items: flex-start;
+
+    min-height: 400px;
+    height: auto;
     width: 80%;
     margin: 50px auto 0 auto;    /* margin: top right bottom left; */
 
@@ -11,11 +15,11 @@
 }
 
 .about_company_words_content {
-    display: flex;
+    display: block;
     /* align-items: flex-start;
     justify-content: space-between; */
 
-    height: 100%;
+    height: auto;
     width: 100%;
     /* gap: 150px; */
 }
@@ -26,24 +30,22 @@
     align-items: flex-start;
     flex-direction: column;
 
-    height: 100%;
-    width: 35%;
+    height: auto;
 }
 
 .about_company_tagline_text {
-    color: var(--font-blue);
-    font-family: "Thin_Formal_Italics";
+    color: var(--header-color);
+    font-family: "Thin_Formal_Clean";
     text-align: left;
     font-size: 40px;
     font-weight: bold;
 }
 
 .about_company_tagline_desc {
-    color: var(--font-blue);
-    font-family: "Thin_Formal_Clean";
+    color: var(--desc-color);
+    font-family: "Open_Sans";
     text-align: left;
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 20px;
 }
 
 .about_company_image_details {
@@ -51,13 +53,14 @@
     align-items: center;
     justify-content: center;
 
-    height: 100%;
-    width: 65%;
+    height: auto;
 
     /* background-color: rgb(192, 87, 87); */
 }
 
 .about_company_image {
-    height: 90%;
+    max-height: 360px;
+    max-width: 100%;
+    height: auto;
     width: auto;
 }
