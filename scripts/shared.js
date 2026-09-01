@@ -14,6 +14,7 @@ async function loadPage(page) {
     const newStyle = `styles/${page}.css`;
 
     pageContent.style.visibility = "hidden";
+    pageContent.innerHTML = "";
 
     if (pageStyle.getAttribute("href") === newStyle) {
         pageContent.innerHTML = html;
