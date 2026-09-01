@@ -10,15 +10,21 @@ async function loadPage(page) {
     }
 
     const html = await response.text();
+    const newStyle = `styles/${page}.css`;
 
-    pageContent.style.visibility = "hidden";
-
-    pageStyle.onload = () => {
+    if (pageStyle.getAttribute("href") === newStyle) {
         pageContent.innerHTML = html;
-        pageContent.style.visibility = "visible";
-    };
+    } else {
+        pageContent.style.visibility = "hidden";
 
-    pageStyle.href = `styles/${page}.css`;
+        pageStyle.onload = () => {
+            pageContent.innerHTML = html;
+            pageContent.style.visibility = "visible";
+            pageStyle.onload = null;
+        };
+
+        pageStyle.href = newStyle;
+    }
 
     document.querySelectorAll("a[data-page]").forEach(link => {
         link.classList.toggle("active_page", link.dataset.page === page);
