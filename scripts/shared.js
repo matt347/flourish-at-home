@@ -3,12 +3,27 @@ const pageStyle = document.getElementById("page_style");
 
 async function loadPage(page) {
     const response = await fetch(`pages/content/${page}.html`);
+
+    if (!response.ok) {
+        console.error(`Could not load page: ${page}`);
+        return;
+    }
+
     pageContent.innerHTML = await response.text();
 
     pageStyle.href = `styles/${page}.css`;
+
+    document.querySelectorAll("a[data-page]").forEach(link => {
+        link.classList.toggle("active_page", link.dataset.page === page);
+    });
+
+    window.scrollTo({
+        top: 0,
+        behavior: "auto"
+    });
 }
 
-document.querySelectorAll(".menu_bar_links a").forEach(link => {
+document.querySelectorAll("a[data-page]").forEach(link => {
     link.addEventListener("click", () => {
         const page = link.dataset.page;
 
@@ -26,6 +41,11 @@ document.querySelectorAll(".menu_bar_links a").forEach(link => {
             bootstrap.Collapse.getOrCreateInstance(navigation).hide();
         }
     });
+});
+
+window.addEventListener("popstate", () => {
+    const page = window.location.hash.substring(1) || "home";
+    loadPage(page);
 });
 
 const startingPage = window.location.hash.substring(1) || "home";
