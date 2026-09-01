@@ -9,7 +9,14 @@ async function loadPage(page) {
         return;
     }
 
-    pageContent.innerHTML = await response.text();
+    const html = await response.text();
+
+    pageContent.style.visibility = "hidden";
+
+    pageStyle.onload = () => {
+        pageContent.innerHTML = html;
+        pageContent.style.visibility = "visible";
+    };
 
     pageStyle.href = `styles/${page}.css`;
 
