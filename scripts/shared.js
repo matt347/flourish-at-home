@@ -1,6 +1,7 @@
 const pageContent = document.getElementById("page_content");
 const pageStyle = document.getElementById("page_style");
 
+
 async function loadPage(page) {
     const response = await fetch(`pages/content/${page}.html`);
 
@@ -14,6 +15,7 @@ async function loadPage(page) {
 
     if (pageStyle.getAttribute("href") === newStyle) {
         pageContent.innerHTML = html;
+        pageContent.style.visibility = "visible";
     } else {
         pageContent.style.visibility = "hidden";
 
@@ -36,6 +38,7 @@ async function loadPage(page) {
     });
 }
 
+
 document.querySelectorAll("a[data-page]").forEach(link => {
     link.addEventListener("click", () => {
         const page = link.dataset.page;
@@ -50,16 +53,19 @@ document.querySelectorAll("a[data-page]").forEach(link => {
         }
 
         const navigation = document.getElementById("main_navigation");
+
         if (navigation && navigation.classList.contains("show")) {
             bootstrap.Collapse.getOrCreateInstance(navigation).hide();
         }
     });
 });
 
+
 window.addEventListener("popstate", () => {
     const page = window.location.hash.substring(1) || "home";
     loadPage(page);
 });
+
 
 const startingPage = window.location.hash.substring(1) || "home";
 loadPage(startingPage);
