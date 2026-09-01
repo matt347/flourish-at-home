@@ -13,12 +13,12 @@ async function loadPage(page) {
     const html = await response.text();
     const newStyle = `styles/${page}.css`;
 
+    pageContent.style.visibility = "hidden";
+
     if (pageStyle.getAttribute("href") === newStyle) {
         pageContent.innerHTML = html;
         pageContent.style.visibility = "visible";
     } else {
-        pageContent.style.visibility = "hidden";
-
         pageStyle.onload = () => {
             pageContent.innerHTML = html;
             pageContent.style.visibility = "visible";
