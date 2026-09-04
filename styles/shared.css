@@ -10,6 +10,10 @@
     --desc-color: rgb(79, 79, 79);
 }
 
+    /* homepage_hero_heading
+    line-height: 1.02;
+    letter-spacing: -2.7px; */
+
 @font-face {
     font-family: "Arial";
     src: local("Arial"); /* redundant but easy to visualize */
@@ -19,7 +23,7 @@
     font-family: "Open_Sans";
     src: url("../fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf") format("truetype");
     font-style: normal;
-    font-weight: 350;
+    font-weight: 300 800;
 }
 
 @font-face {
@@ -67,7 +71,7 @@ html, body {
 
 a {
     color: var(--imperfect-black);
-    font-family: "Less_Bubbly_Formal_Clean";
+    font-family: "Open_Sans";
     text-align: center;
     font-size: 25px;
     text-decoration: none; /* removes the underline from links */
@@ -93,7 +97,7 @@ a {
     font-family: "Open_Sans";
     text-align: left;
     font-size: 20px;
-    font-weight: 300;
+    font-weight: 400;
 
     margin: 0;
     margin-right: 30px;
@@ -157,9 +161,10 @@ a {
 
 .menu_bar_company_text {
     color: var(--imperfect-black);
-    font-family: "Less_Bubbly_Formal_Clean";
+    font-family: "Open_Sans";
     text-align: center;
     font-size: 30px;
+    font-weight: 500;
 
     margin: 0;
 }
@@ -224,7 +229,7 @@ a {
 
 .bottom_info_bar_text {
     color: var(--imperfect-white);
-    font-family: "Less_Bubbly_Formal_Clean";
+    font-family: "Open_Sans";
     text-align: center;
     font-size: 20px;
 }

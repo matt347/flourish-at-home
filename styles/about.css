@@ -2,104 +2,286 @@
     align-items: flex-start;
 
     width: 100%;
-    /* margin: auto auto 50px auto;    margin: top right bottom left; */
 }
 
-.about_company_words_container {
+
+.about_profiles {
+    width: 100%;
+}
+
+
+
+/* PROFILE SECTIONS ------------------------------------------------------------- */
+
+.profile_section {
+    width: 100%;
+
+    padding-top: 85px;
+    padding-bottom: 85px;
+}
+
+
+.profile_light {
+    background-color: rgb(246, 247, 249);
+}
+
+
+.profile_dark {
+    background-color: var(--navy-blue);
+}
+
+
+
+/* STANDARD PROFILE CARDS ------------------------------------------------------------- */
+
+.profile_shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
     align-items: center;
-    justify-content: center;
 
-    min-height: 400px;
-    height: auto;
-    width: 100%;
-    /* margin: 50px auto 0 auto;    margin: top right bottom left; */
+    gap: 60px;
+
+    width: min(1180px, 88%);
+    margin: 0 auto;
+
+    background-color: white;
+
+    border: 1px solid rgba(30, 55, 81, 0.14);
+    border-radius: 16px;
+
+    box-shadow: 0 18px 50px rgba(30, 55, 81, 0.08);
+
+    padding: 55px 65px;
 }
 
-.maeve_bio_container {
-    display: block;
-    /* align-items: flex-start;
-    justify-content: space-between; */
 
-    height: auto;
-    width: 100%;
-    padding-top: 35px;
-    padding-bottom: 35px;
+.profile_dark .profile_shell {
+    background-color: rgb(38, 65, 94);
+
+    border-color: rgba(255, 255, 255, 0.12);
+
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.18);
 }
 
-.joey_bio_container {
-    display: block;
-    /* align-items: flex-start;
-    justify-content: space-between; */
+
+
+/* MAEVE FEATURED PROFILE ------------------------------------------------------------- */
+
+.maeve_profile_shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+    align-items: center;
+
+    gap: 60px;
+
+    width: min(1180px, 88%);
+    margin: 0 auto 30px auto;
+
+    background-color: white;
+
+    border: 1px solid rgba(30, 55, 81, 0.14);
+    border-radius: 16px;
+
+    box-shadow: 0 18px 50px rgba(30, 55, 81, 0.08);
+
+    padding: 55px 65px;
+}
+
+
+.maeve_company_card {
+    width: min(1180px, 88%);
+    margin: 0 auto;
 
     background-color: var(--navy-blue);
 
-    height: auto;
-    width: 100%;
-    padding-top: 35px;
-    padding-bottom: 35px;
+    border-radius: 16px;
+
+    box-shadow: 0 18px 50px rgba(30, 55, 81, 0.12);
+
+    padding: 50px 65px;
 }
 
-.matt_bio_container {
-    display: block;
-    /* align-items: flex-start;
-    justify-content: space-between; */
 
-    height: auto;
-    width: 100%;
-    padding-top: 35px;
-    padding-bottom: 35px;
+.maeve_company_card .profile_title,
+.maeve_company_card .profile_paragraph {
+    color: var(--imperfect-white);
 }
 
-.bio_inner_container {
-    width: 80%;
-    margin: 0 auto 0 auto;
+
+.maeve_company_copy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 45px;
 }
 
-.bio_details {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
 
-    height: auto;
+
+/* PROFILE TEXT ------------------------------------------------------------- */
+
+.profile_text_content {
+    min-width: 0;
 }
 
-.bio_text {
+
+.profile_heading {
+    position: relative;
+
+    margin-bottom: 35px;
+    padding-bottom: 25px;
+}
+
+
+.profile_heading::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    width: 55px;
+    height: 4px;
+
+    background-color: var(--lime-green);
+
+    border-radius: 10px;
+}
+
+
+.profile_title {
     color: var(--header-color);
+
     font-family: "Thin_Formal_Clean";
-    text-align: left;
-    font-size: 40px;
+    font-size: 44px;
     font-weight: bold;
+
+    margin: 0;
 }
 
-.bio_desc {
+
+.profile_copy {
+    max-width: 900px;
+}
+
+
+.profile_paragraph {
     color: var(--desc-color);
+
     font-family: "Open_Sans";
-    text-align: left;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.75;
+
+    margin: 0 0 24px 0;
 }
 
-.joey_bio_text {
+
+.profile_signature {
+    color: var(--header-color);
+
+    font-family: "Open_Sans";
+    font-size: 16px;
+
+    text-align: right;
+
+    margin: 30px 0 0 0;
+}
+
+
+.profile_dark .profile_title,
+.profile_dark .profile_paragraph,
+.profile_dark .profile_signature {
     color: var(--imperfect-white);
 }
 
-.joey_bio_desc {
-    color: var(--imperfect-white);
-}
 
-.about_company_image_details {
+
+/* PROFILE IMAGES ------------------------------------------------------------- */
+
+.profile_image_container {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
-    height: auto;
-
-    /* background-color: rgb(192, 87, 87); */
+    width: 100%;
 }
 
-.about_company_image {
-    max-height: 360px;
-    max-width: 100%;
-    height: auto;
-    width: auto;
+
+.profile_image {
+    width: 100%;
+    max-width: 350px;
+
+    aspect-ratio: 4 / 5;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.14);
+}
+
+
+
+/* MOBILE ------------------------------------------------------------- */
+
+@media (max-width: 767.98px) {
+
+    .profile_section {
+        padding-top: 45px;
+        padding-bottom: 45px;
+    }
+
+
+    .profile_shell,
+    .maeve_profile_shell {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+        width: 90%;
+
+        padding: 35px 28px;
+    }
+
+
+    .maeve_profile_shell {
+        margin-bottom: 25px;
+    }
+
+
+    .maeve_company_card {
+        width: 90%;
+
+        padding: 35px 28px;
+    }
+
+
+    .maeve_company_copy {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+
+    .profile_title {
+        font-size: 34px;
+    }
+
+
+    .profile_paragraph {
+        font-size: 17px;
+        line-height: 1.65;
+    }
+
+
+    .profile_signature {
+        text-align: left;
+    }
+
+
+    .profile_image {
+        max-width: 280px;
+    }
+
 }
