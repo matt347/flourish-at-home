@@ -56,13 +56,17 @@
 
 
 .profile_dark .profile_shell {
-    background-color: rgb(38, 65, 94);
+    /* background-color: rgb(38, 65, 94); */
+    background-color: var(--imperfect-white);
 
     border-color: rgba(255, 255, 255, 0.12);
 
     box-shadow: 0 20px 55px rgba(0, 0, 0, 0.18);
 }
 
+/* .profile_light .profile_shell {
+    border: 10px solid var(--navy-blue);
+} */
 
 
 /* MAEVE FEATURED PROFILE ------------------------------------------------------------- */
@@ -92,8 +96,9 @@
     width: min(1180px, 88%);
     margin: 0 auto;
 
-    background-color: var(--navy-blue);
+    background-color: white;
 
+    border: 3px solid var(--navy-blue);
     border-radius: 16px;
 
     box-shadow: 0 18px 50px rgba(30, 55, 81, 0.12);
@@ -104,7 +109,7 @@
 
 .maeve_company_card .profile_title,
 .maeve_company_card .profile_paragraph {
-    color: var(--imperfect-white);
+    color: var(--navy-blue);
 }
 
 
@@ -192,7 +197,7 @@
 .profile_dark .profile_title,
 .profile_dark .profile_paragraph,
 .profile_dark .profile_signature {
-    color: var(--imperfect-white);
+    color: var(--navy-blue);
 }
 
 

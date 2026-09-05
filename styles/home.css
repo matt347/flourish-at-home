@@ -3,14 +3,7 @@
 .homepage_hero_section {
     width: 100%;
 
-    background:
-        radial-gradient(circle at 85% 20%, rgba(47, 145, 70, 0.12), transparent 35%),
-        linear-gradient(
-            to bottom,
-            rgb(255, 255, 255) 0%,
-            rgb(248, 249, 250) 72%,
-            rgb(241, 244, 247) 100%
-        );
+    background-color: var(--imperfect-white);
 
     padding-top: 90px;
     padding-bottom: 110px;
