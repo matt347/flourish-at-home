@@ -1,6 +1,7 @@
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
-const MAX_BODY_SIZE = 12000;
+const MAX_BODY_SIZE_BYTES = 12000;
+const RESEND_TIMEOUT_MS = 10000;
 
 const recentRequests = new Map();
 
@@ -11,93 +12,195 @@ function sendJson(response, statusCode, body) {
 }
 
 
-function getClientIp(request) {
-    const forwardedFor = request.headers["x-forwarded-for"];
+function getHeader(request, name) {
+    const value = request.headers?.[name];
 
-    if (Array.isArray(forwardedFor)) {
-        return forwardedFor[0] || "unknown";
+    if (Array.isArray(value)) {
+        return value[0] || "";
     }
 
-    if (typeof forwardedFor === "string" && forwardedFor.length > 0) {
-        return forwardedFor.split(",")[0].trim();
-    }
-
-    return request.socket?.remoteAddress || "unknown";
+    return typeof value === "string" ? value : "";
 }
 
 
-function isRateLimited(ipAddress) {
-    const now = Date.now();
-    const previousRequests = recentRequests.get(ipAddress) || [];
-    const activeRequests = previousRequests.filter(timestamp => now - timestamp < RATE_LIMIT_WINDOW_MS);
+function getClientIp(request) {
+    const forwardedFor = getHeader(request, "x-forwarded-for");
 
-    if (activeRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
-        recentRequests.set(ipAddress, activeRequests);
-        return true;
+    if (forwardedFor) {
+        return forwardedFor.split(",")[0].trim() || null;
     }
 
-    activeRequests.push(now);
-    recentRequests.set(ipAddress, activeRequests);
+    return request.socket?.remoteAddress || null;
+}
 
-    if (recentRequests.size > 1000) {
-        for (const [ip, timestamps] of recentRequests.entries()) {
-            const stillActive = timestamps.filter(timestamp => now - timestamp < RATE_LIMIT_WINDOW_MS);
 
-            if (stillActive.length === 0) {
-                recentRequests.delete(ip);
-            } else {
-                recentRequests.set(ip, stillActive);
-            }
+function pruneRateLimitEntries(now = Date.now()) {
+    for (const [ipAddress, requests] of recentRequests.entries()) {
+        const activeRequests = requests.filter(entry => now - entry.timestamp < RATE_LIMIT_WINDOW_MS);
+
+        if (activeRequests.length === 0) {
+            recentRequests.delete(ipAddress);
+        } else {
+            recentRequests.set(ipAddress, activeRequests);
         }
     }
-
-    return false;
 }
 
 
-function cleanText(value) {
-    return typeof value === "string" ? value.replace(/\0/g, "").trim() : "";
+function reserveRateLimitSlot(ipAddress) {
+    if (!ipAddress) {
+        return {
+            limited: false,
+            reservation: null
+        };
+    }
+
+    const now = Date.now();
+
+    pruneRateLimitEntries(now);
+
+    const activeRequests = recentRequests.get(ipAddress) || [];
+
+    if (activeRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
+        return {
+            limited: true,
+            reservation: null
+        };
+    }
+
+    const reservation = {
+        timestamp: now
+    };
+
+    activeRequests.push(reservation);
+    recentRequests.set(ipAddress, activeRequests);
+
+    return {
+        limited: false,
+        reservation: reservation
+    };
+}
+
+
+function releaseRateLimitSlot(ipAddress, reservation) {
+    if (!ipAddress || !reservation) {
+        return;
+    }
+
+    const requests = recentRequests.get(ipAddress) || [];
+    const remainingRequests = requests.filter(entry => entry !== reservation);
+
+    if (remainingRequests.length === 0) {
+        recentRequests.delete(ipAddress);
+    } else {
+        recentRequests.set(ipAddress, remainingRequests);
+    }
+}
+
+
+function cleanSingleLine(value) {
+    if (typeof value !== "string") {
+        return "";
+    }
+
+    return value
+        .replace(/[\u0000-\u001F\u007F]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+
+function cleanMessage(value) {
+    if (typeof value !== "string") {
+        return "";
+    }
+
+    return value
+        .replace(/\r\n?/g, "\n")
+        .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+        .trim();
 }
 
 
 function cleanSubjectText(value) {
-    return cleanText(value).replace(/[\r\n]+/g, " ").slice(0, 80);
+    return cleanSingleLine(value).slice(0, 80);
 }
 
 
 function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 
 function isValidPhone(phone) {
-    return phone === "" || /^[0-9+().\-\s]{7,30}$/.test(phone);
+    if (phone === "") {
+        return true;
+    }
+
+    if (!/^[0-9+().\-\s]{7,30}$/.test(phone)) {
+        return false;
+    }
+
+    const digitsOnly = phone.replace(/\D/g, "");
+
+    return digitsOnly.length >= 7 && digitsOnly.length <= 15;
+}
+
+
+function getSubmittedAt() {
+    return new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+        timeZoneName: "short"
+    }).format(new Date());
 }
 
 
 module.exports = async function handler(request, response) {
     if (request.method !== "POST") {
         response.setHeader("Allow", "POST");
-        return sendJson(response, 405, { message: "Method not allowed." });
+
+        return sendJson(response, 405, {
+            message: "Method not allowed."
+        });
     }
 
-    const fetchSite = request.headers["sec-fetch-site"];
+
+    const fetchSite = getHeader(request, "sec-fetch-site");
 
     if (fetchSite && !["same-origin", "same-site", "none"].includes(fetchSite)) {
-        return sendJson(response, 403, { message: "Request not allowed." });
+        return sendJson(response, 403, {
+            message: "Request not allowed."
+        });
     }
 
-    const contentType = request.headers["content-type"] || "";
+
+    const contentType = getHeader(request, "content-type").toLowerCase();
 
     if (!contentType.includes("application/json")) {
-        return sendJson(response, 415, { message: "Invalid request format." });
+        return sendJson(response, 415, {
+            message: "Invalid request format."
+        });
     }
 
-    const contentLength = Number(request.headers["content-length"] || 0);
 
-    if (contentLength > MAX_BODY_SIZE) {
-        return sendJson(response, 413, { message: "Your message is too large." });
+    const contentLengthHeader = getHeader(request, "content-length");
+
+    if (contentLengthHeader) {
+        const contentLength = Number.parseInt(contentLengthHeader, 10);
+
+        if (Number.isFinite(contentLength) && contentLength > MAX_BODY_SIZE_BYTES) {
+            return sendJson(response, 413, {
+                message: "Your message is too large."
+            });
+        }
     }
+
 
     let body = request.body;
 
@@ -105,77 +208,117 @@ module.exports = async function handler(request, response) {
         try {
             body = JSON.parse(body);
         } catch {
-            return sendJson(response, 400, { message: "Invalid request." });
+            return sendJson(response, 400, {
+                message: "Invalid request."
+            });
         }
     }
 
+
     if (!body || typeof body !== "object" || Array.isArray(body)) {
-        return sendJson(response, 400, { message: "Invalid request." });
+        return sendJson(response, 400, {
+            message: "Invalid request."
+        });
     }
 
-    if (JSON.stringify(body).length > MAX_BODY_SIZE) {
-        return sendJson(response, 413, { message: "Your message is too large." });
+
+    let serializedBody;
+
+    try {
+        serializedBody = JSON.stringify(body);
+    } catch {
+        return sendJson(response, 400, {
+            message: "Invalid request."
+        });
     }
 
-    const name = cleanText(body.name);
-    const email = cleanText(body.email).toLowerCase();
-    const phone = cleanText(body.phone);
-    const message = cleanText(body.message);
-    const website = cleanText(body.website);
 
+    if (Buffer.byteLength(serializedBody, "utf8") > MAX_BODY_SIZE_BYTES) {
+        return sendJson(response, 413, {
+            message: "Your message is too large."
+        });
+    }
+
+
+    const name = cleanSingleLine(body.name);
+    const email = cleanSingleLine(body.email);
+    const phone = cleanSingleLine(body.phone);
+    const message = cleanMessage(body.message);
+    const website = cleanSingleLine(body.website);
+
+
+    // Honeypot field. Real users never fill this out.
     if (website !== "") {
-        return sendJson(response, 200, { success: true });
+        return sendJson(response, 200, {
+            success: true
+        });
     }
 
-    if (name.length < 2 || name.length > 100) {
-        return sendJson(response, 400, { message: "Please enter a valid name." });
+
+    if (name.length < 1 || name.length > 100) {
+        return sendJson(response, 400, {
+            message: "Please enter a valid name."
+        });
     }
 
-    if (email.length > 254 || !isValidEmail(email)) {
-        return sendJson(response, 400, { message: "Please enter a valid email address." });
+
+    if (!isValidEmail(email)) {
+        return sendJson(response, 400, {
+            message: "Please enter a valid email address."
+        });
     }
+
 
     if (!isValidPhone(phone)) {
-        return sendJson(response, 400, { message: "Please enter a valid phone number or leave it blank." });
+        return sendJson(response, 400, {
+            message: "Please enter a valid phone number or leave it blank."
+        });
     }
+
 
     if (message.length < 1 || message.length > 3000) {
-        return sendJson(response, 400, { message: "Please enter a message between 1 and 3000 characters." });
+        return sendJson(response, 400, {
+            message: "Please enter a message between 1 and 3000 characters."
+        });
     }
 
-    const clientIp = getClientIp(request);
-
-    if (isRateLimited(clientIp)) {
-        return sendJson(response, 429, { message: "Too many messages have been submitted. Please wait a few minutes and try again." });
-    }
 
     const resendApiKey = process.env.RESEND_API_KEY;
     const contactToEmail = process.env.CONTACT_TO_EMAIL;
     const contactFromEmail = process.env.CONTACT_FROM_EMAIL;
 
+
     if (!resendApiKey || !contactToEmail || !contactFromEmail) {
         console.error("Contact form email environment variables are not configured.");
-        return sendJson(response, 500, { message: "The contact form is temporarily unavailable. Please call us instead." });
+
+        return sendJson(response, 500, {
+            message: "The contact form is temporarily unavailable. Please call us instead."
+        });
     }
 
+
+    const clientIp = getClientIp(request);
+    const rateLimit = reserveRateLimitSlot(clientIp);
+
+
+    if (rateLimit.limited) {
+        return sendJson(response, 429, {
+            message: "Too many messages have been submitted. Please wait a few minutes and try again."
+        });
+    }
+
+
     const safeNameForSubject = cleanSubjectText(name);
-    const submittedAt = new Date().toLocaleString("en-US", {
-        timeZone: "America/New_York",
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true
-    });
+    const submittedAt = getSubmittedAt();
+
 
     const emailText = [
         "Flourish At Home Website Inquiry",
         "",
-        'Name: ${name}',
-        'Email: ${email}',
-        'Phone: ${phone || "Not provided"}',
-        'Submitted: ${submittedAt} (EST)',
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Phone: ${phone || "Not provided"}`,
+        `Submitted: ${submittedAt}`,
         "",
         "Message:",
         message,
@@ -184,31 +327,74 @@ module.exports = async function handler(request, response) {
         "This message was sent through the Flourish At Home website contact form."
     ].join("\n");
 
+
+    const controller = new AbortController();
+
+    const timeoutId = setTimeout(() => {
+        controller.abort();
+    }, RESEND_TIMEOUT_MS);
+
+
     try {
         const resendResponse = await fetch("https://api.resend.com/emails", {
             method: "POST",
+
             headers: {
-                "Authorization": 'Bearer ${resendApiKey}',
+                "Authorization": `Bearer ${resendApiKey}`,
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify({
                 from: contactFromEmail,
                 to: [contactToEmail],
                 reply_to: email,
-                subject: 'Flourish At Home Inquiry - ${safeNameForSubject}',
+                subject: `Flourish At Home Inquiry - ${safeNameForSubject}`,
                 text: emailText
-            })
+            }),
+
+            signal: controller.signal
         });
 
+
         if (!resendResponse.ok) {
+            releaseRateLimitSlot(clientIp, rateLimit.reservation);
+
             const resendError = await resendResponse.text();
-            console.error("Resend email error:", resendResponse.status, resendError);
-            return sendJson(response, 502, { message: "We could not send your message right now. Please try again or call us instead." });
+
+            console.error(
+                "Resend email error:",
+                resendResponse.status,
+                resendError
+            );
+
+            return sendJson(response, 502, {
+                message: "We could not send your message right now. Please try again or call us instead."
+            });
         }
 
-        return sendJson(response, 200, { success: true });
+
+        return sendJson(response, 200, {
+            success: true
+        });
+
+
     } catch (error) {
-        console.error("Contact form email error:", error);
-        return sendJson(response, 500, { message: "We could not send your message right now. Please try again or call us instead." });
+        releaseRateLimitSlot(clientIp, rateLimit.reservation);
+
+
+        if (error?.name === "AbortError") {
+            console.error("Contact form email request timed out.");
+        } else {
+            console.error("Contact form email error:", error);
+        }
+
+
+        return sendJson(response, 500, {
+            message: "We could not send your message right now. Please try again or call us instead."
+        });
+
+
+    } finally {
+        clearTimeout(timeoutId);
     }
 };
