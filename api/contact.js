@@ -139,8 +139,8 @@ module.exports = async function handler(request, response) {
         return sendJson(response, 400, { message: "Please enter a valid phone number or leave it blank." });
     }
 
-    if (message.length < 10 || message.length > 3000) {
-        return sendJson(response, 400, { message: "Please enter a message between 10 and 3000 characters." });
+    if (message.length < 1 || message.length > 3000) {
+        return sendJson(response, 400, { message: "Please enter a message between 1 and 3000 characters." });
     }
 
     const clientIp = getClientIp(request);

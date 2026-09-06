@@ -96,7 +96,7 @@
 
 
 .homepage_primary_button {
-    color: var(--imperfect-white);
+    color: white;
     background-color: var(--navy-blue);
 
     box-shadow: 0 10px 25px rgba(30, 55, 81, 0.18);
@@ -120,7 +120,7 @@
 
 
 .homepage_primary_button:hover {
-    color: var(--imperfect-white);
+    color: white;
     background-color: var(--navy-blue);
 }
 
@@ -355,7 +355,7 @@
 
 
 .homepage_cta_title {
-    color: var(--imperfect-white);
+    color: white;
 
     font-family: "Thin_Formal_Clean";
     font-size: 42px;
@@ -377,7 +377,7 @@
 
     color: var(--navy-blue);
 
-    background-color: var(--imperfect-white);
+    background-color: white;
 
     border-radius: 9px;
 
