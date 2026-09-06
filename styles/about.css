@@ -22,7 +22,7 @@
 
 
 .profile_light {
-    background-color: rgb(246, 247, 249);
+    background-color: var(--imperfect-white);
 }
 
 

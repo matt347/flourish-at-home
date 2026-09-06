@@ -6,7 +6,7 @@
     background-color: var(--imperfect-white);
 
     padding-top: 90px;
-    padding-bottom: 110px;
+    padding-bottom: 90px;
 }
 
 
@@ -26,7 +26,7 @@
     color: var(--lime-green);
 
     font-family: "Open_Sans";
-    font-size: 14px;
+    font-size: 25px;
     font-weight: 700;
 
     text-transform: uppercase;
@@ -40,7 +40,7 @@
     color: var(--header-color);
 
     font-family: "Thin_Formal_Clean";
-    font-size: clamp(46px, 5vw, 72px);
+    font-size: clamp(35px, 5vw, 60px);
     font-weight: bold;
     line-height: 1.05;
 
@@ -52,7 +52,7 @@
     color: var(--desc-color);
 
     font-family: "Open_Sans";
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 1.75;
 
@@ -69,7 +69,7 @@
     display: flex;
     align-items: center;
 
-    gap: 14px;
+    gap: 15px;
 
     flex-wrap: wrap;
 }
@@ -91,16 +91,12 @@
 
     padding: 0 24px;
 
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        background-color 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 
 .homepage_primary_button {
     color: var(--imperfect-white);
-
     background-color: var(--navy-blue);
 
     box-shadow: 0 10px 25px rgba(30, 55, 81, 0.18);
@@ -109,10 +105,11 @@
 
 .homepage_secondary_button {
     color: var(--navy-blue);
-
-    background-color: transparent;
+    background-color: white;
 
     border: 1px solid rgba(30, 55, 81, 0.25);
+
+    box-shadow: 0 10px 25px rgba(30, 55, 81, 0.18);
 }
 
 
@@ -124,15 +121,13 @@
 
 .homepage_primary_button:hover {
     color: var(--imperfect-white);
-
-    box-shadow: 0 14px 30px rgba(30, 55, 81, 0.24);
+    background-color: var(--navy-blue);
 }
 
 
 .homepage_secondary_button:hover {
     color: var(--navy-blue);
-
-    background-color: rgba(30, 55, 81, 0.05);
+    background-color: white;
 }
 
 
@@ -140,69 +135,44 @@
 /* HERO IMAGE ------------------------------------------------------------- */
 
 .homepage_hero_image_card {
-    width: 100%;
+    width: fit-content;
+    max-width: 100%;
 
-    background-color: white;
+    background-color: var(--imperfect-white);
 
-    border: 1px solid rgba(30, 55, 81, 0.12);
-    border-radius: 18px;
+    border: 1px solid rgba(30, 55, 81, 0.16);
+    border-radius: 10px;
 
-    box-shadow: 0 24px 60px rgba(30, 55, 81, 0.12);
+    box-shadow: 0 18px 45px rgba(30, 55, 81, 0.14);
 
-    padding: 14px;
+    overflow: hidden;
+
+    margin-left: auto;
+    margin-right: clamp(0px, 3vw, 50px);
 }
 
 
 .homepage_hero_image_container {
-    height: 100%;
-    width: auto;
+    width: 100%;
 
     overflow: hidden;
 
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 
 .homepage_hero_image {
     display: block;
 
-    width: 100%;
-    height: 430px;
+    height: 520px;
+    width: auto;
+    max-width: 100%;
 
-    object-fit: cover;
-}
-
-
-.homepage_hero_image_caption {
-    display: flex;
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 18px 8px 6px 8px;
-}
-
-
-.homepage_hero_image_caption_line {
-    width: 32px;
-    height: 3px;
-
-    flex-shrink: 0;
-
-    background-color: var(--lime-green);
+    object-fit: contain; 
+    /* cover = fills box, may crop    contain = shows whole image, may leave empty space    fill = stretches image to fit, can distort it */
+    object-position: center;
 
     border-radius: 10px;
-}
-
-
-.homepage_hero_image_caption_text {
-    color: var(--desc-color);
-
-    font-family: "Open_Sans";
-    font-size: 14px;
-    font-weight: 500;
-
-    margin: 0;
 }
 
 
@@ -230,7 +200,7 @@
     color: var(--lime-green);
 
     font-family: "Open_Sans";
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
 
     text-transform: uppercase;
@@ -268,13 +238,11 @@
 
     box-shadow: 0 14px 40px rgba(30, 55, 81, 0.06);
 
-    padding: 34px;
+    padding: 30px;
 
     overflow: hidden;
 
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 
@@ -373,7 +341,7 @@
 
 
 .homepage_cta_eyebrow {
-    color: rgb(123, 208, 143);
+    color: var(--light-green);
 
     font-family: "Open_Sans";
     font-size: 14px;
@@ -442,12 +410,12 @@
 
 
     .homepage_hero_title {
-        font-size: 44px;
+        font-size: 45px;
     }
 
 
     .homepage_hero_desc {
-        font-size: 17px;
+        font-size: 18px;
         line-height: 1.65;
     }
 
@@ -460,6 +428,11 @@
     .homepage_primary_button,
     .homepage_secondary_button {
         flex: 1;
+    }
+
+
+    .homepage_hero_image_card {
+        margin: 10px auto 0 auto;
     }
 
 
@@ -508,7 +481,7 @@
 
 
     .homepage_cta_title {
-        font-size: 34px;
+        font-size: 35px;
     }
 
 }

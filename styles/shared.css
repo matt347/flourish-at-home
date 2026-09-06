@@ -161,12 +161,12 @@ a {
 }
 
 .menu_bar_company_text {
-    color: var(--imperfect-black);
-    font-family: "Open_Sans";
+    color: var(--navy-blue);
+    font-family: "Thin_Formal_Clean";
     text-align: center;
     font-size: 30px;
-    font-weight: 500;
-    letter-spacing: 0px;
+    font-weight: 600;
+    letter-spacing: .1px;
 
     margin: 0;
 }
@@ -181,8 +181,10 @@ a {
 
 /* company logo on the left side of the menu bar */
 .menu_bar_company_logo_image {
-    height: 85%;
+    height: 50%;
     width: auto;
+
+    padding-bottom: 5px;
 }
 
 /* company page links on the right side of the menu bar */
