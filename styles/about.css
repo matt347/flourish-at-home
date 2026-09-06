@@ -210,6 +210,8 @@
     align-items: center;
 
     width: 100%;
+
+    object-fit: contain;  /* MAY WANT TO REMOVE LATER, MAYBE NOT */
 }
 
 

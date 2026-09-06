@@ -159,20 +159,28 @@ module.exports = async function handler(request, response) {
     }
 
     const safeNameForSubject = cleanSubjectText(name);
-    const submittedAt = new Date().toISOString();
+    const submittedAt = new Date().toLocaleString("en-US", {
+        timeZone: "America/New_York",
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+    });
 
     const emailText = [
-        "New Flourish At Home Website Inquiry",
+        "Flourish At Home Website Inquiry",
         "",
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Phone: ${phone || "Not provided"}`,
-        `Submitted: ${submittedAt}`,
+        'Name: ${name}',
+        'Email: ${email}',
+        'Phone: ${phone || "Not provided"}',
+        'Submitted: ${submittedAt} (EST)',
         "",
         "Message:",
         message,
         "",
-        "---",
+        "-----",
         "This message was sent through the Flourish At Home website contact form."
     ].join("\n");
 
@@ -180,14 +188,14 @@ module.exports = async function handler(request, response) {
         const resendResponse = await fetch("https://api.resend.com/emails", {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${resendApiKey}`,
+                "Authorization": 'Bearer ${resendApiKey}',
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 from: contactFromEmail,
                 to: [contactToEmail],
                 reply_to: email,
-                subject: `New Flourish At Home Inquiry - ${safeNameForSubject}`,
+                subject: 'Flourish At Home Inquiry - ${safeNameForSubject}',
                 text: emailText
             })
         });
