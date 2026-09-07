@@ -169,12 +169,10 @@
     max-width: 100%;
 
     object-fit: contain;
-    /* cover = fills box, may crop    contain = shows whole image, may leave empty space    fill = stretches image to fit, can distort it */
     object-position: center;
 
     border-radius: 10px;
 }
-
 
 
 /* HOMEPAGE VALUES ------------------------------------------------------------- */
@@ -262,7 +260,7 @@
 
     letter-spacing: 1px;
 
-    margin-bottom: 55px;
+    margin-bottom: 15px;
 }
 
 
@@ -376,7 +374,6 @@
     min-height: 52px;
 
     color: var(--navy-blue);
-
     background-color: white;
 
     border-radius: 9px;
@@ -441,8 +438,35 @@
     }
 
 
-    .homepage_hero_image_card {
-        margin-top: 10px;
+    .homepage_locations_section {
+        padding-top: 55px;
+        padding-bottom: 55px;
+    }
+
+
+    .homepage_locations_title {
+        font-size: 38px;
+    }
+
+
+    .homepage_locations_card {
+        justify-content: flex-start;
+
+        padding: 20px;
+    }
+
+
+    .homepage_location {
+        font-size: 15px;
+
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+
+
+    .homepage_location:not(:first-child)::before {
+        margin-left: 12px;
+        margin-right: 12px;
     }
 
 

@@ -1,3 +1,16 @@
+/*
+
+rgb(40, 106, 177) this is a goat blue
+
+rgb(41, 89, 185) pretty solid blue
+
+rgb(62, 115, 161);
+
+rgb(216, 218, 239) great light blue ish purple
+
+*/
+
+
 :root {
     --imperfect-white: rgb(246, 247, 249);
     --imperfect-black: rgb(30, 30, 30);
@@ -211,6 +224,102 @@ a {
     margin: 0 auto;
 }
 
+
+
+/* HOMEPAGE LOCATIONS ------------------------------------------------------------- */
+
+.homepage_locations_section {
+    width: 100%;
+
+    background-color: var(--imperfect-white);
+
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+
+
+.homepage_locations_intro {
+    margin-bottom: 35px;
+}
+
+
+.homepage_locations_eyebrow {
+    color: var(--lime-green);
+
+    font-family: "Open_Sans";
+    font-size: 15px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    margin: 0 0 12px 0;
+}
+
+
+.homepage_locations_title {
+    color: var(--navy-blue);
+
+    font-family: "Thin_Formal_Clean";
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1.1;
+
+    margin: 0;
+}
+
+
+.homepage_locations_card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    width: 100%;
+
+    background-color: var(--navy-blue);
+
+    border-radius: 10px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10);
+
+    padding: 26px 30px;
+}
+
+
+.homepage_location {
+    display: inline-flex;
+    align-items: center;
+
+    color: white;
+
+    font-family: "Open_Sans";
+    font-size: 15px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+
+.homepage_location:not(:first-child)::before {
+    content: "";
+
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    background-color: var(--light-green);
+
+    border-radius: 50%;
+
+    margin-left: 22px;
+    margin-right: 22px;
+}
 
 
 /* BOTTOM BAR STYLING -------------------------------------------------------------*/
