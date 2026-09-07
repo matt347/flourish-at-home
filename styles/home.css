@@ -449,27 +449,6 @@
     }
 
 
-    .homepage_locations_card {
-        justify-content: flex-start;
-
-        padding: 20px;
-    }
-
-
-    .homepage_location {
-        font-size: 15px;
-
-        margin-top: 6px;
-        margin-bottom: 6px;
-    }
-
-
-    .homepage_location:not(:first-child)::before {
-        margin-left: 12px;
-        margin-right: 12px;
-    }
-
-
     .homepage_values_section {
         padding-top: 65px;
         padding-bottom: 70px;
