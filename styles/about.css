@@ -257,6 +257,16 @@
     }
 
 
+    .profile_image_container {
+        grid-row: 1;
+    }
+
+
+    .profile_text_content {
+        grid-row: 2;
+    }
+
+
     .maeve_company_card {
         width: 90%;
 

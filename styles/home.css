@@ -26,8 +26,8 @@
     color: var(--lime-green);
 
     font-family: "Open_Sans";
-    font-size: 25px;
-    font-weight: 700;
+    font-size: 50px;
+    font-weight: 1000;
 
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -40,7 +40,7 @@
     color: var(--header-color);
 
     font-family: "Thin_Formal_Clean";
-    font-size: clamp(35px, 5vw, 60px);
+    font-size: 35px;
     font-weight: bold;
     line-height: 1.05;
 

@@ -269,43 +269,42 @@ a {
 } 
  
  
-.homepage_locations_card { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
- 
-    flex-wrap: wrap; 
- 
-    width: 100%; 
- 
-    background-color: var(--navy-blue); 
- 
-    border-radius: 10px; 
- 
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10); 
- 
-    padding: 26px 30px; 
-} 
+.homepage_locations_card {  
+    display: grid;  
+    grid-template-columns: repeat(2, max-content);  
+    justify-content: center;  
+
+    gap: 22px 300px;  
+  
+    width: 100%;  
+  
+    background-color: var(--navy-blue);  
+    border-radius: 10px;  
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10);  
+  
+    padding: 34px 40px;  
+}
  
  
 .homepage_location { 
     display: inline-flex; 
+    justify-content: flex-start; 
     align-items: center; 
  
     color: white; 
  
     font-family: "Open_Sans"; 
-    font-size: 15px; 
+    font-size: 20px; 
     font-weight: 700; 
+    text-align: left; 
  
     white-space: nowrap; 
  
-    margin-top: 8px; 
-    margin-bottom: 8px; 
+    margin: 0; 
 } 
  
  
-.homepage_location:not(:first-child)::before { 
+.homepage_location::before { 
     content: ""; 
  
     width: 6px; 
@@ -317,8 +316,7 @@ a {
  
     border-radius: 50%; 
  
-    margin-left: 22px; 
-    margin-right: 22px; 
+    margin-right: 12px; 
 } 
  
  
@@ -407,36 +405,13 @@ a {
     } 
  
     .homepage_locations_card { 
-        display: grid; 
-        grid-template-columns: repeat(2, 1fr); 
-        align-content: start; 
         gap: 22px 20px; 
  
         padding: 30px 24px; 
     } 
  
     .homepage_location { 
-        justify-content: flex-start; 
- 
-        margin: 0; 
- 
-        font-size: 16px; 
-        text-align: left; 
-    } 
- 
-    .homepage_locations_card .homepage_location::before { 
-        content: ""; 
- 
-        width: 6px; 
-        height: 6px; 
- 
-        flex-shrink: 0; 
- 
-        background-color: var(--light-green); 
-        border-radius: 50%; 
- 
-        margin-left: 0; 
-        margin-right: 10px; 
+        font-size: 18px; 
     } 
 } 
  
